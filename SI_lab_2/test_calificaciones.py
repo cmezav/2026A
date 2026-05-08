@@ -18,7 +18,7 @@ Clases de equivalencia analizadas:
 """
 
 import pytest
-from SI_lab_2.calificaciones import evaluar_rendimiento
+from calificaciones import evaluar_rendimiento
 
 
 # ══════════════════════════════════════════════════════
