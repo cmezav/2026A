@@ -4,7 +4,7 @@
 
 import tkinter as tk
 from tkinter import messagebox
-from atm import Atm, SaldoInsuficienteError, MontoInvalidoError
+from SI_lab_1.atm import Atm, SaldoInsuficienteError, MontoInvalidoError
 
 # ─── Colores y fuentes ───────────────────────────────────────────────────────
 BG_DARK    = "#1a1a2e"

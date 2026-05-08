@@ -1,6 +1,6 @@
 # rectangle_test.py
 import unittest
-from rectangle import calcular_area
+from SI_lab_1.rectangle import calcular_area
 
 class TestAreaRectangulo(unittest.TestCase):
 

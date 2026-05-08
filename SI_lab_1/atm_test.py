@@ -1,5 +1,5 @@
 import unittest # para definir las clases de prueba y los casos de prueba
-from atm import validar_monto_entero, validar_retiro, validar_deposito
+from SI_lab_1.atm import validar_monto_entero, validar_retiro, validar_deposito
 
 # CLASE 1 para validar que el monto ingresado es un int, no decimales, letras o simbolos
 class TestValidarMontoEntero(unittest.TestCase):
