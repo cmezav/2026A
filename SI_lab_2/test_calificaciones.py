@@ -114,13 +114,13 @@ class TestClasesEquivalenciaInvalidas_Tipos:
         with pytest.raises(ValueError):
             evaluar_rendimiento([])
 
-    def test_cei3_diccionario(self):
+    def test_cei3_diccionario(self): 
         with pytest.raises(ValueError):
-            evaluar_rendimiento({})
+            evaluar_rendimiento({}) 
 
     def test_cei3_bool_true(self):
         with pytest.raises(ValueError):
-            evaluar_rendimiento(True)
+            evaluar_rendimiento(True) 
 
     def test_cei3_bool_false(self):
         with pytest.raises(ValueError):

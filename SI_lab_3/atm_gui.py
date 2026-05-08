@@ -4,15 +4,17 @@
 
 import tkinter as tk
 from tkinter import messagebox
-from SI_lab_1.atm import Atm, SaldoInsuficienteError, MontoInvalidoError
+from atm import Atm, SaldoInsuficienteError, MontoInvalidoError
+
 
 # ─── Colores y fuentes ───────────────────────────────────────────────────────
-BG_DARK    = "#1a1a2e"
-BG_CARD    = "#16213e"
-BG_PANEL   = "#0f3460"
-ACCENT     = "#e94560"
-TEXT_WHITE = "#eaeaea"
-TEXT_GRAY  = "#a8a8b3"
+BG_DARK    = "#ffffff"
+BG_CARD    = "#b6cfff"
+BG_PANEL   = "#b3d5ff"
+
+ACCENT     = "#000000"
+TEXT_WHITE = "#000000"
+TEXT_GRAY  = "#000000"
 
 BTN_GREEN  = "#00b894"
 BTN_RED    = "#d63031"
@@ -27,6 +29,7 @@ FONT_BIG   = ("Segoe UI", 26, "bold")
 class AtmApp(tk.Tk):
 
     def __init__(self):
+
         super().__init__()
 
         self.title("Cajero Automático ATM")
@@ -42,18 +45,19 @@ class AtmApp(tk.Tk):
         self._build_ui()
         self._refresh_saldo()
 
-    # ──────────────────────────────────────────────────────────────────────
+    # ──────────────────────────────────────────────────────────────────
     # Construcción de interfaz
-    # ──────────────────────────────────────────────────────────────────────
+    # ──────────────────────────────────────────────────────────────────
     def _build_ui(self):
 
-        # ── Encabezado ───────────────────────────────────────────────────
+        # ── Encabezado ───────────────────────────────────────────────
         header = tk.Frame(
             self,
             bg=BG_PANEL,
             padx=20,
             pady=14
         )
+
         header.pack(fill="x")
 
         tk.Label(
@@ -64,13 +68,14 @@ class AtmApp(tk.Tk):
             fg=TEXT_WHITE
         ).pack(side="left")
 
-        # ── Tarjeta saldo ────────────────────────────────────────────────
+        # ── Tarjeta saldo ────────────────────────────────────────────
         card = tk.Frame(
             self,
             bg=BG_CARD,
             padx=30,
             pady=20
         )
+
         card.pack(
             fill="x",
             padx=20,
@@ -92,6 +97,7 @@ class AtmApp(tk.Tk):
             bg=BG_CARD,
             fg=ACCENT
         )
+
         self._lbl_saldo.pack(anchor="w")
 
         tk.Label(
@@ -105,13 +111,14 @@ class AtmApp(tk.Tk):
             pady=(6, 0)
         )
 
-        # ── Entrada de monto ────────────────────────────────────────────
+        # ── Entrada de monto ────────────────────────────────────────
         input_frame = tk.Frame(
             self,
             bg=BG_DARK,
             padx=20,
             pady=4
         )
+
         input_frame.pack(fill="x")
 
         tk.Label(
@@ -143,13 +150,14 @@ class AtmApp(tk.Tk):
             lambda e: self._depositar()
         )
 
-        # ── Botones ─────────────────────────────────────────────────────
+        # ── Botones ─────────────────────────────────────────────────
         btn_frame = tk.Frame(
             self,
             bg=BG_DARK,
             padx=20,
             pady=10
         )
+
         btn_frame.pack(fill="x")
 
         btn_cfg = {
@@ -200,7 +208,7 @@ class AtmApp(tk.Tk):
             **btn_cfg
         ).pack(side="left")
 
-        # ── Historial ───────────────────────────────────────────────────
+        # ── Historial ───────────────────────────────────────────────
         hist_frame = tk.Frame(
             self,
             bg=BG_DARK,
@@ -264,10 +272,11 @@ class AtmApp(tk.Tk):
             yscrollcommand=scroll.set
         )
 
-    # ──────────────────────────────────────────────────────────────────────
+    # ──────────────────────────────────────────────────────────────────
     # Helpers
-    # ──────────────────────────────────────────────────────────────────────
+    # ──────────────────────────────────────────────────────────────────
     def _refresh_saldo(self):
+
         self._lbl_saldo.config(
             text=f"S/ {self._cajero.saldo:,.2f}"
         )
@@ -285,18 +294,57 @@ class AtmApp(tk.Tk):
 
         self._txt.config(state="disabled")
 
+    # ──────────────────────────────────────────────────────────────────
+    # Validación de monto
+    # ──────────────────────────────────────────────────────────────────
     def _get_monto(self):
 
         raw = self._entry.get().strip()
 
+        # ── Campo vacío ─────────────────────────
         if not raw:
+
             messagebox.showwarning(
                 "Campo vacío",
                 "Ingrese un monto."
             )
+
             return None
 
+        # ── Símbolos monetarios ────────────────
+        if "$" in raw or "S/" in raw:
+
+            messagebox.showerror(
+                "Formato inválido",
+                "No ingrese símbolos monetarios."
+            )
+
+            return None
+
+        # ── Letras y alfanuméricos ─────────────
+        if any(c.isalpha() for c in raw):
+
+            # Contiene letras y números
+            if any(c.isdigit() for c in raw):
+
+                messagebox.showerror(
+                    "Entrada inválida",
+                    "No se permiten valores alfanuméricos."
+                )
+
+            # Solo letras
+            else:
+
+                messagebox.showerror(
+                    "Entrada inválida",
+                    "No se permiten letras."
+                )
+
+            return None
+
+        # ── Conversión numérica ────────────────
         try:
+
             val = float(raw)
 
         except ValueError:
@@ -312,9 +360,9 @@ class AtmApp(tk.Tk):
 
         return val
 
-    # ──────────────────────────────────────────────────────────────────────
+    # ──────────────────────────────────────────────────────────────────
     # Acciones
-    # ──────────────────────────────────────────────────────────────────────
+    # ──────────────────────────────────────────────────────────────────
     def _depositar(self):
 
         monto = self._get_monto()
@@ -329,7 +377,7 @@ class AtmApp(tk.Tk):
             self._refresh_saldo()
 
             self._log(
-                f"[DEPÓSITO]  +S/{monto:.2f}  →  "
+                f"[DEPÓSITO] +S/{monto:.2f} → "
                 f"Saldo: S/{self._cajero.saldo:,.2f}"
             )
 
@@ -358,7 +406,7 @@ class AtmApp(tk.Tk):
             self._refresh_saldo()
 
             self._log(
-                f"[RETIRO]  -S/{monto:.2f}  →  "
+                f"[RETIRO] -S/{monto:.2f} → "
                 f"Saldo: S/{self._cajero.saldo:,.2f}"
             )
 
@@ -398,9 +446,9 @@ class AtmApp(tk.Tk):
         )
 
 
-# ──────────────────────────────────────────────────────────────────────────
+# ──────────────────────────────────────────────────────────────────────
 # Entry point
-# ──────────────────────────────────────────────────────────────────────────
+# ──────────────────────────────────────────────────────────────────────
 if __name__ == "__main__":
 
     app = AtmApp()

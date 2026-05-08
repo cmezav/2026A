@@ -20,7 +20,7 @@ class Atm:
     DEPOSITO_MAX_DIA = 10000.0
     MULTIPLO         = 10.0
 
-    def __init__(self, titular: str, saldo_inicial: float = 1000.0):
+    def __init__(self, titular: str, saldo_inicial: float = 1000.0): 
         if saldo_inicial < 0:
             raise MontoInvalidoError("El saldo inicial no puede ser negativo.")
         self.titular        = titular
@@ -52,10 +52,10 @@ class Atm:
         if monto < self.DEPOSITO_MINIMO:
             raise MontoInvalidoError(
                 f"Monto mínimo de depósito es S/{self.DEPOSITO_MINIMO}.")
-        if monto % self.MULTIPLO != 0:
+        if monto % self.MULTIPLO != 0: 
             raise MontoInvalidoError(
                 f"Solo se permiten múltiplos de S/{self.MULTIPLO}.")
-        if self._depositado_hoy + monto > self.DEPOSITO_MAX_DIA:
+        if self._depositado_hoy + monto > self.DEPOSITO_MAX_DIA: 
             disponible = self.DEPOSITO_MAX_DIA - self._depositado_hoy
             raise MontoInvalidoError(
                 f"Supera el límite diario de depósito. "

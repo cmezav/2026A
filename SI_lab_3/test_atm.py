@@ -1,6 +1,6 @@
 # test_atm.py
 import pytest
-from SI_lab_1.atm import Atm, SaldoInsuficienteError, MontoInvalidoError
+from atm import Atm, SaldoInsuficienteError, MontoInvalidoError
 
 
 # ════════════════════════════════════════════════════════════════════
