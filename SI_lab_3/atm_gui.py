@@ -276,13 +276,13 @@ class AtmApp(tk.Tk):
     # Helpers
     # ──────────────────────────────────────────────────────────────────
     def _refresh_saldo(self):
-
+        # Actualiza el texto del saldo con formato de moneda
         self._lbl_saldo.config(
             text=f"S/ {self._cajero.saldo:,.2f}"
         )
 
     def _log(self, msg: str):
-
+        # Agrega un mensaje al historial, desplazando el scroll hacia abajo
         self._txt.config(state="normal")
 
         self._txt.insert(
